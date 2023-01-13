@@ -27,34 +27,36 @@ class FavoritePage extends StatelessWidget {
 class FavoriteItemTile extends StatelessWidget {
   final int itemNo;
 
-  const FavoriteItemTile(
-    this.itemNo,
-  );
+  const FavoriteItemTile(this.itemNo, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.primaries[itemNo % Colors.primaries.length],
-        ),
-        title: Text(
-          'Item $itemNo',
-          key: Key('favorites_text_$itemNo'),
-        ),
-        trailing: IconButton(
-          key: Key('remove_icon_$itemNo'),
-          icon: Icon(Icons.close),
-          onPressed: () {
-            Provider.of<Favorites>(context, listen: false).remove(itemNo);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Removed from favorites.'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-          },
+      child: Card(
+        elevation: 5,
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(10),
+          leading: CircleAvatar(
+            backgroundColor: Colors.primaries[itemNo % Colors.primaries.length],
+          ),
+          title: Text(
+            'Item $itemNo',
+            key: Key('favorites_text_$itemNo'),
+          ),
+          trailing: IconButton(
+            key: Key('remove_icon_$itemNo'),
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              Provider.of<Favorites>(context, listen: false).remove(itemNo);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Removed from favorites.'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
